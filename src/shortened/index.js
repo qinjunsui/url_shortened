@@ -5,7 +5,7 @@ export default function Shortened(props) {
 
     const idCheck = () => {
         const redirectId = props.match.params.id;
-        
+
         if (redirectId) {
             const src = getRedirectSource(redirectId);
 
@@ -16,7 +16,10 @@ export default function Shortened(props) {
         }
         setError(true);
     }
-    useEffect(idCheck, []);
+    useEffect(() => {
+        idCheck()
+        // eslint-disable-next-line
+    }, [props.match.params.id]);
 
     const getRedirectSource = (id) => {
         const idToSrc = JSON.parse(localStorage.getItem('idToSrc')) || {};
