@@ -7,12 +7,15 @@ export default function Home() {
 
     const getHashId = () => {
         const srcToId = JSON.parse(localStorage.getItem('srcToId')) || {};
+        const idToSrc = JSON.parse(localStorage.getItem('idToSrc')) || {};
 
         if (!srcToId[url]) {
             const count = String(Object.keys(srcToId).length + 1);
             srcToId[url] = count;
+            idToSrc[count] = url;
 
             localStorage.setItem(('srcToId'), JSON.stringify(srcToId));
+            localStorage.setItem(('idToSrc'), JSON.stringify(idToSrc));
         }
         return srcToId[url];
     }
@@ -24,7 +27,7 @@ export default function Home() {
     }
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", alignContent: "center" }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h1>Please input the URL</h1>
             <div>
                 <span>http(s)://</span>
@@ -32,9 +35,9 @@ export default function Home() {
                     placeholder="type url here"
                     value={url}
                     onChange={event => setUrl(event.target.value)}
-                    style={{ height: 30, width: 500, paddingLeft: 12, marginLeft: 8, marginRight: 8 }}
+                    style={{ height: 30, width: 500, paddingLeft: 12, marginLeft: 8 }}
                 />
-                <button onClick={submitForm}>
+                <button onClick={submitForm} style={{ height: 30, marginLeft: 8 }}>
                     Submit
                 </button>
             </div>
