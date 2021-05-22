@@ -2,10 +2,25 @@ import React, { useState } from 'react';
 
 export default function Home() {
     const [url, setUrl] = useState('');
+    const [id, setId] = useState('');
 
+
+    const getHashId = () => {
+        const srcToId = JSON.parse(localStorage.getItem('srcToId')) || {};
+
+        if (!srcToId[url]) {
+            const count = String(Object.keys(srcToId).length + 1);
+            srcToId[url] = count;
+
+            localStorage.setItem(('srcToId'), JSON.stringify(srcToId));
+        }
+        return srcToId[url];
+    }
 
     const submitForm = () => {
-        console.log("Successful")
+        const redirectId = getHashId();
+        setUrl('')
+        setId(redirectId);
     }
 
     return (
@@ -21,8 +36,11 @@ export default function Home() {
                 />
                 <button onClick={submitForm}>
                     Submit
-            </button>
+                </button>
             </div>
+            {
+                id ? <p>{`http://localhost:3000/redirect/${id}`}</p> : null
+            }
         </div>
     )
 }
